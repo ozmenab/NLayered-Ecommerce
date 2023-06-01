@@ -1,4 +1,5 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
 using System;
@@ -71,6 +72,16 @@ namespace DataAccess.Concrete.InMemory
                 productToUpdate.UnitsInStock = product.UnitsInStock;
                 productToUpdate.CategoryId = product.CategoryId;
             }
+        }
+
+        Product IEntityRepository<Product>.Add(Product entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Product IEntityRepository<Product>.Update(Product entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

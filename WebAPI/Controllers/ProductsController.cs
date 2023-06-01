@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -22,11 +23,28 @@ namespace WebAPI.Controllers
         {
             return _productService.GetAll();
         }
+        [HttpGet("{id}")]
+        public Product GetById(int id)
+        {
+            return _productService.GetById(id);
+        }
+
         [HttpPost]
         public Product Add(Product product)
         {
-            ValidationTool.Validate(new ProductValidator(), product);
+            //ValidationTool.Validate(new ProductValidator(), product);
             return _productService.Add(product);
         }
+        [HttpPut]
+        public Product Update(Product product)
+        {
+            return _productService.Update(product);
+        }
+        [HttpDelete]
+        public void DeleteById(int id)
+        {
+            _productService.DeleteById(id);
+        }
+        
     }
 }
