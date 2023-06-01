@@ -1,13 +1,9 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using DataAccess.Abstract;
-using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concrete
 {
@@ -20,6 +16,7 @@ namespace Business.Concrete
             _productDal = productDal;
         }
 
+        [ValidationAspect(typeof(ProductValidator))]
         public Product Add(Product product)
         {
             _productDal.Add(product);
@@ -42,9 +39,9 @@ namespace Business.Concrete
             return _productDal.GetAll();
         }
 
-        public List<Product> GetAllByCategory(int id)
+        public List<Product> GetAllByCategory(int categoryId)
         {
-            return _productDal.GetAll(p=>p.CategoryId==id);
+            return _productDal.GetAll(p=>p.CategoryId==categoryId);
         }
 
         public Product GetById(int productId)
@@ -62,9 +59,10 @@ namespace Business.Concrete
             return _productDal.GetProductDetails();
         }
 
+        [ValidationAspect(typeof(ProductValidator))]
         public Product Update(Product product)
         {
-            throw new NotImplementedException();
+            return _productDal.Update(product);
         }
     }
 }
